@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ZeroSearch</title><link rel="stylesheet" href="popup.css"></head><body><main>
+<header><div class="logo">Z</div><div><strong>ZeroSearch</strong><small>Predictive usability</small></div><span id="status" class="status">LOCAL</span></header>
+<div class="current"><small>CURRENT WEBSITE</small><strong id="site">Reading current tab…</strong><span id="pageTitle"></span></div>
+<div class="toggle-row"><div><strong>Tracking</strong><small>Pause event collection</small></div><label class="switch"><input id="pause" type="checkbox"><span></span></label></div>
+<div class="toggle-row"><div><strong>Form draft recovery</strong><small>Opt-in, local-only; sensitive fields skipped</small></div><label class="switch"><input id="draft" type="checkbox"><span></span></label></div>
+<div class="section-title">YOU MAY NEED</div><div id="predictions" class="predictions"><p class="empty">Looking for useful next steps…</p></div>
+<div class="section-title">QUICK ACTIONS</div><div class="actions"><button id="back">↶ Back</button><button id="dashboard">▦ Dashboard</button><button id="refresh">↻ Refresh</button></div>
+<div class="feedback hidden" id="feedback"><span>Was this helpful?</span><button data-useful="1">Yes</button><button data-useful="0">Not really</button></div>
+<p id="message" class="message"></p><footer>Suggestions only · You stay in control</footer>
+</main><script src="popup.js"></script></body></html>

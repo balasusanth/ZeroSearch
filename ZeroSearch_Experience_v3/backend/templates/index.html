@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZeroSearch — Aurora Usability Studio</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css', v='3.3') }}">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">Z</div><div><strong>ZeroSearch</strong><small>Usability intelligence</small></div></div>
+    <div class="workspace-wrap">
+      <button class="workspace" id="workspaceBtn" aria-expanded="false"><span class="dot"></span> <span id="workspaceName">Personal workspace</span> <span class="chevron">⌄</span></button>
+      <div class="dropdown-menu hidden" id="workspaceMenu"><strong>Workspace</strong><button type="button" data-workspace="Personal workspace">Personal workspace</button><button type="button" data-workspace="Usability study">Usability study</button><button type="button" data-workspace="Demo workspace">Demo workspace</button><small>Workspace labels are local UI organization in this prototype.</small></div>
+    </div>
+    <div class="nav-label">WORKSPACE</div>
+    <button class="nav-item active" data-view="overview"><span>▦</span> Overview</button>
+    <button class="nav-item" data-view="predictions"><span>✦</span> Smart predictions</button>
+    <button class="nav-item" data-view="shortcuts"><span>↗</span> Quick workflows</button>
+    <button class="nav-item" data-view="radar"><span>◎</span> Usability Radar</button>
+    <button class="nav-item" data-view="scorecard"><span>◈</span> Personal scorecard</button>
+    <div class="nav-label">PREFERENCES</div>
+    <button class="nav-item" data-view="accessibility"><span>◐</span> Accessibility</button>
+    <button class="nav-item" data-view="privacy"><span>⌑</span> Privacy & controls</button>
+    <div class="profile-wrap">
+      <button class="sidebar-bottom profile-button" id="profileBtn" aria-expanded="false"><div class="avatar">{{ (user.name[:2] if user else 'ZS')|upper }}</div><div class="profile-copy"><strong>{{ user.name if user else 'Local profile' }}</strong><small>{{ user.email if user else 'Signed in locally' }}</small></div><span class="more">•••</span></button>
+      <div class="dropdown-menu profile-menu hidden" id="profileMenu"><div class="profile-menu-head"><strong>{{ user.name }}</strong><small>{{ user.email }}</small></div><button type="button" id="profileSettingsBtn">Account details</button><form method="post" action="{{ url_for('logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit">Sign out</button></form></div>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div class="crumb">Workspace <span>/</span> <b id="crumbTitle">Overview</b></div><div class="top-actions"><span class="live"><i></i> Local engine</span><button class="icon-button" title="Refresh" id="refreshBtn">↻</button><button class="avatar small top-profile" id="topProfileBtn" title="Open account menu">{{ (user.name[:2] if user else 'ZS')|upper }}</button></div></header>
+    <section class="page-heading"><div><div class="eyebrow">PREDICTIVE USABILITY PLATFORM</div><h1 id="pageTitle">Make the next step effortless.</h1><p id="pageSubtitle">A clearer view of your browsing patterns, friction signals, and useful shortcuts.</p></div><button class="primary" id="openExtensionHelp">⌘ &nbsp; Set up extension</button></section>
+    <section id="overviewView" class="view">
+      <div class="hero-card"><div class="hero-copy"><div class="hero-tag">✦ YOUR BROWSING COPILOT</div><h2>Less searching.<br><em>More getting done.</em></h2><p>ZeroSearch learns from your browsing patterns to surface likely next steps — without taking control away from you.</p><button class="hero-button" data-goto="predictions">Explore recommendations <span>→</span></button></div><div class="hero-art"><div class="orb orb1"></div><div class="orb orb2"></div><div class="float-card"><div class="mini-icon">✦</div><div><small>Suggested next step</small><strong>Continue your workflow</strong><span class="confidence">Confidence based on local history</span></div><span class="arrow">↗</span></div><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="center-z">Z</div></div></div>
+      <div class="section-row"><div><h2>At a glance</h2><p>Insights update as the extension records activity.</p></div><span class="muted-pill">● Live local data</span></div>
+      <div class="metric-grid">
+        <div class="metric"><div class="metric-top"><span>Tracked events</span><span class="metric-icon purple">⌁</span></div><strong id="mEvents">—</strong><small><span class="up">↗</span> Local activity signals</small><div class="sparkline"></div></div>
+        <div class="metric"><div class="metric-top"><span>Predictions generated</span><span class="metric-icon blue">✦</span></div><strong id="mPredictions">—</strong><small>Recommendations surfaced</small><div class="sparkline s2"></div></div>
+        <div class="metric"><div class="metric-top"><span>Useful feedback</span><span class="metric-icon green">✓</span></div><strong id="mUseful">—</strong><small id="feedbackLabel">Waiting for feedback</small><div class="sparkline s3"></div></div>
+        <div class="metric"><div class="metric-top"><span>Friction signals</span><span class="metric-icon orange">◎</span></div><strong id="mFriction">—</strong><small>Heuristic, not a verdict</small><div class="sparkline s4"></div></div>
+      </div>
+      <div class="content-grid"><div class="panel"><div class="panel-head"><div><h3>Recent activity</h3><p>Your latest locally recorded browsing events</p></div><button class="text-button" data-goto="radar">View insights →</button></div><div id="activityList" class="activity-list"><div class="empty">No events yet. Load the extension and browse a few pages.</div></div></div>
+      <div class="panel"><div class="panel-head"><div><h3>Quick start</h3><p>Get value from ZeroSearch</p></div><span class="badge">4 steps</span></div><div class="steps"><div class="step"><span>1</span><div><strong>Load the extension</strong><small>Enable local behavior signals</small></div><b>→</b></div><div class="step"><span>2</span><div><strong>Browse normally</strong><small>Build your private history</small></div><b>→</b></div><div class="step"><span>3</span><div><strong>Review predictions</strong><small>Open helpful next destinations</small></div><b>→</b></div><div class="step"><span>4</span><div><strong>Share feedback</strong><small>Improve recommendations</small></div><b>→</b></div></div></div></div>
+    </section>
+    <section id="predictionsView" class="view hidden"><div class="panel"><div class="panel-head"><div><h3>Smart predictions</h3><p>Explainable suggestions learned from observed navigation patterns.</p></div><span class="badge">Website-scoped</span></div><div class="feature-banner"><span class="banner-icon">✦</span><div><strong>Predictions are suggestions, not actions.</strong><p>ZeroSearch never navigates automatically. Use the extension popup on a site to view and open recommendations.</p></div></div><div class="model-panel"><div><span class="model-chip">LOCAL ML LAB</span><h3>Train your next-step model</h3><p>Train a Random Forest classifier from recorded same-domain navigation transitions. It needs enough examples; until then, the extension uses transparent frequency-based fallback predictions.</p><div id="modelStatus" class="model-status">Model status: not checked yet</div></div><button class="primary" id="trainModelBtn">Train & evaluate</button></div>
+<div class="evaluation-wrap">
+  <div class="evaluation-heading"><div><h3>Model evaluation</h3><p>Chronological holdout results compared with a simple most-frequent-page baseline.</p></div><span class="model-chip" id="evalState">NOT EVALUATED</span></div>
+  <div class="evaluation-grid">
+    <div class="eval-metric"><small>Top-1 accuracy</small><strong id="evalTop1">—</strong><span>First suggestion was correct</span></div>
+    <div class="eval-metric"><small>Top-3 accuracy</small><strong id="evalTop3">—</strong><span>Correct page appeared in top 3</span></div>
+    <div class="eval-metric"><small>Baseline top-1</small><strong id="evalBase1">—</strong><span>Most frequent destination</span></div>
+    <div class="eval-metric"><small>Baseline top-3</small><strong id="evalBase3">—</strong><span>Three most frequent destinations</span></div>
+  </div>
+  <div class="evaluation-foot"><span id="evalCounts">No evaluation data yet.</span><span id="evalComparison">Train the model to calculate metrics.</span></div>
+  <p class="evaluation-note" id="evalNote">Metrics are computed on a chronological holdout and are not a guarantee of real-world usefulness. More diverse browsing data gives a more meaningful estimate.</p>
+</div>
+<div id="predictionInfo" class="empty">Predictions will appear in the extension when you visit sites with enough local history.</div></div></section>
+    <section id="shortcutsView" class="view hidden"><div class="panel"><div class="panel-head"><div><h3>Quick workflows</h3><p>Save trusted destinations and open them in one click.</p></div></div><form id="shortcutForm" class="shortcut-form"><input id="shortcutTitle" placeholder="Shortcut name (e.g. Course portal)" required><input id="shortcutUrl" type="url" placeholder="https://example.com" required><button class="primary">+ Add shortcut</button></form><div id="shortcutsList" class="shortcut-list"></div></div></section>
+    <section id="radarView" class="view hidden"><div class="panel"><div class="panel-head"><div><h3>Usability Radar</h3><p>Potential friction patterns from consenting local browsing activity.</p></div><span class="badge amber">Heuristic signals</span></div><div class="radar-grid"><div class="radar-card"><span class="radar-symbol">↶</span><strong id="backtrackCount">0</strong><span>Backtracking signals</span><small>May indicate confusing navigation</small></div><div class="radar-card"><span class="radar-symbol">⟳</span><strong id="repeatCount">0</strong><span>Repeated-page signals</span><small>May indicate repeated lookup</small></div></div><div class="notice"><strong>Interpret responsibly</strong><p>Repeated visits and backtracking can be intentional. These signals are prompts for usability investigation, not proof that a website is broken. Validate with task-based user testing.</p></div><h3 class="subhead">Most visited domains</h3><div id="domainList" class="domain-list"></div></div></section>
+    <section id="scorecardView" class="view hidden"><div class="panel score-panel"><div class="panel-head"><div><h3>Personal usability scorecard</h3><p>A transparent prototype indicator based on recent activity and feedback.</p></div><span class="badge">Experimental</span></div><div class="score-wrap"><div class="score-ring" id="scoreRing"><div><strong id="scoreValue">—</strong><small>/ 100</small></div></div><div><div class="eyebrow">YOUR CURRENT SIGNAL</div><h2 id="scoreLabel">Collecting activity</h2><p id="scoreText">The score is a simple heuristic for this prototype, not a scientific measure of website usability.</p><div id="scoreDetails" class="score-details"></div></div></div></div></section>
+    <section id="accessibilityView" class="view hidden"><div class="panel"><div class="panel-head"><div><h3>Accessibility companion</h3><p>Adjust ZeroSearch's own interface. Website support varies.</p></div></div><div class="setting-row"><div><strong>Text size</strong><small>Make dashboard text easier to read</small></div><div class="segmented"><button data-scale="1">Default</button><button data-scale="1.1">Large</button><button data-scale="1.2">Larger</button></div></div><div class="setting-row"><div><strong>High contrast</strong><small>Increase contrast in the dashboard</small></div><label class="switch"><input type="checkbox" id="contrastToggle"><span></span></label></div><div class="setting-row"><div><strong>Reduce motion</strong><small>Disable decorative movement</small></div><label class="switch"><input type="checkbox" id="motionToggle"><span></span></label></div><div class="notice">Keyboard tip: use Tab to move between controls and Enter or Space to activate them. The extension popup also supports a quick pause control.</div></div></section>
+    <section id="privacyView" class="view hidden"><div class="panel"><div class="panel-head"><div><h3>Privacy & controls</h3><p>Keep tracking deliberate and visible.</p></div></div><div class="setting-row"><div><strong>Local behavior analytics</strong><small>Events are stored in the local SQLite database while the backend is running.</small></div><span class="status-on">LOCAL</span></div><div class="setting-row"><div><strong>Form draft recovery</strong><small>Opt-in only; stored in Chrome local storage, not sent to the backend. Sensitive fields are excluded.</small></div><span class="status-on">OPT-IN</span></div><div class="setting-row"><div><strong>Pause extension tracking</strong><small>Use the ZeroSearch extension popup to pause/resume event tracking.</small></div><span class="badge">Extension popup</span></div><div class="notice"><strong>Data reset</strong><p>To reset prototype analytics, stop the backend and delete <code>backend/zeros earch.db</code> (actual filename: <code>zerosearch.db</code>). This permanently removes the local event database.</p></div></div></section>
+    <footer>ZeroSearch <span>•</span> Predictive usability, with the user in control <span class="footer-right">Prototype build · local-first</span></footer>
+  </main>
+</div>
+<div id="toast" class="toast"></div>
+<script src="{{ url_for('static', filename='app.js', v='3.3') }}"></script>
+</body></html>

@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "ZeroSearch \u2014 Predictive Usability",
+  "version": "4.4.1",
+  "description": "ZeroSearch Aurora: ML-assisted predictive usability copilot with a page navigator, page scans, reading mode, and privacy controls.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:5000/*",
+    "http://localhost:5000/*",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_title": "ZeroSearch",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "toggle-zerosearch": {
+      "suggested_key": {
+        "default": "Alt+Shift+Z",
+        "mac": "Alt+Shift+Z"
+      },
+      "description": "Toggle the ZeroSearch floating assistant"
+    }
+  }
+}
